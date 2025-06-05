@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout: Your Information - StyleSphere</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="checkout-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">StyleSphere</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="checkout-container">
+        <div class="checkout-title">
+            <h1>Checkout: Your Information</h1>
+        </div>
+        
+        <div class="checkout-content">
+            <form class="buyer-info-form" id="buyerInfoForm">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="zipCode">Address</label>
+                    <input type="text" id="address" name="address" placeholder="Address" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="cancelCheckout()">CANCEL</button>
+                    <button type="submit" class="btn btn-primary">CONTINUE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('buyerInfoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form fields
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const zipCode = document.getElementById('address').value.trim();
+            
+            if (!firstName || !lastName || !address) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Store buyer information
+            const buyerInfo = {
+                firstName: firstName,
+                lastName: lastName,
+                zipCode: address,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('buyerInfo', JSON.stringify(buyerInfo));
+            
+            // Navigate to checkout overview
+            window.location.href = 'checkout.html';
+        });
+
+        function cancelCheckout() {
+            // Clear any stored checkout data
+            localStorage.removeItem('buyerInfo');
+            localStorage.removeItem('purchasedItem');
+            localStorage.removeItem('purchasePrice');
+            
+            // Return to homepage
+            window.location.href = 'homepage.html';
+        }
+
+        // Pre-fill form if data exists (for testing)
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedInfo = localStorage.getItem('buyerInfo');
+            if (savedInfo) {
+                const info = JSON.parse(savedInfo);
+                document.getElementById('firstName').value = info.firstName || '';
+                document.getElementById('lastName').value = info.lastName || '';
+                document.getElementById('address').value = info.address || '';
+            }
+        });
+    </script>
+</body>
+</html>
