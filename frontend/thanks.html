@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - StyleSphere</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="thank-you-container">
+            <div class="success-icon">✓</div>
+            <h1>Thank You for Your Purchase!</h1>
+            <div class="purchase-details">
+                <p>Your order has been confirmed.</p>
+                <div class="order-info" id="orderInfo">
+                    <!-- Order details will be populated here -->
+                </div>
+            </div>
+            <div class="action-buttons">
+                <a href="/homepage.html" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                // Fetch the latest order for the user
+                const response = await fetch(`/api/orders/user/${user.id}`);
+                const orders = await response.json();
+                
+                if (orders.length > 0) {
+                    const latestOrder = orders[orders.length - 1];
+                    const item = latestOrder.items[0];
+                    
+                    document.getElementById('orderInfo').innerHTML = `
+                        <p><strong>Item:</strong> ${item.name}</p>
+                        <p><strong>Price:</strong> RM${item.price}</p>
+                        <p><strong>Order Number:</strong> ${latestOrder.id}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load order details:', error);
+            }
+        });
+    </script>
+</body>
+</html>

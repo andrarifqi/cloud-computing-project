@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - StyleSphere</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">StyleSphere</h1>
+            <div id="userGreeting">
+                <span id="welcomeMessage"></span>
+                <button id="logoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2>Our Products</h2>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check authentication
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // Display user greeting and logout button
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${user.fullname || user.email}!`;
+
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/auth/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${user.token}` // If using JWT
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Clear client-side session
+                        sessionStorage.removeItem('user');
+                        sessionStorage.removeItem('currentProduct');
+                        sessionStorage.removeItem('shippingInfo');
+                        
+                        // Redirect to login page
+                        window.location.href = '/login.html';
+                    } else {
+                        alert('Logout failed. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    // Fallback: clear session anyway
+                    sessionStorage.clear();
+                    window.location.href = '/login.html';
+                }
+            });
+
+            // Rest of your product loading code...
+            try {
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                
+                const productGrid = document.getElementById('productGrid');
+                productGrid.innerHTML = products.map(product => `
+                    <div class="product-card">
+                        <img src="/assets/${product.image}" alt="${product.name}">
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="description">${product.description}</p>
+                            <p class="price">RM${product.price}</p>
+                            <button class="btn btn-primary buy-btn" 
+                                    data-id="${product.id}"
+                                    data-name="${product.name}"
+                                    data-price="${product.price}">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add event listeners to all buy buttons
+                document.querySelectorAll('.buy-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        sessionStorage.setItem('currentProduct', JSON.stringify({
+                            id: btn.dataset.id,
+                            name: btn.dataset.name,
+                            price: btn.dataset.price
+                        }));
+                        window.location.href = '/buyer-info.html';
+                    });
+                });
+            } catch (error) {
+                console.error('Failed to load products:', error);
+            }
+        });
+    </script>
+</body>
+</html>

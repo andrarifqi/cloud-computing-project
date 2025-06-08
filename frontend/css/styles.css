@@ -608,3 +608,19 @@ body {
     }
 }
 
+/* Add to your existing styles */
+#userGreeting {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#logoutBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+#logoutBtn:hover {
+    background: #e74c3c;
+    color: white;
+}

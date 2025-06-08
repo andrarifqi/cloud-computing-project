@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - StyleSphere</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header class="checkout-header">
+        <div class="container">
+            <h1 class="logo">StyleSphere</h1>
+        </div>
+    </header>
+
+    <div class="checkout-container">
+        <div class="checkout-title">
+            <h1>Checkout: Overview</h1>
+        </div>
+        
+        <div class="checkout-content">
+            <div class="order-summary">
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>QTY</th>
+                            <th>DESCRIPTION</th>
+                            <th>PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderItems">
+                        <!-- Order items will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="checkout-details">
+                <div class="detail-section">
+                    <h3>Shipping Information:</h3>
+                    <div id="shippingDetails"></div>
+                </div>
+
+                <div class="order-totals">
+                    <div class="total-row">
+                        <span>Item total:</span>
+                        <span id="itemTotal"></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Shipping:</span>
+                        <span>FREE</span>
+                    </div>
+                    <div class="total-row final-total">
+                        <span><strong>Total:</strong></span>
+                        <span id="finalTotal"></span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="window.location.href='/buyer-info.html'">CANCEL</button>
+                    <button type="button" class="btn btn-primary btn-finish" id="completeOrderBtn">COMPLETE ORDER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check for required data
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            const product = JSON.parse(sessionStorage.getItem('currentProduct'));
+            const shippingInfo = JSON.parse(sessionStorage.getItem('shippingInfo'));
+            
+            if (!user || !product || !shippingInfo) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // Display order details
+            document.getElementById('orderItems').innerHTML = `
+                <tr>
+                    <td class="qty">1</td>
+                    <td class="description">
+                        <div class="product-name">${product.name}</div>
+                    </td>
+                    <td class="price">RM${product.price}</td>
+                </tr>
+            `;
+
+            document.getElementById('itemTotal').textContent = `RM${product.price}`;
+            document.getElementById('finalTotal').innerHTML = `<strong>RM${product.price}</strong>`;
+            
+            // Display shipping info
+            document.getElementById('shippingDetails').innerHTML = `
+                <p><strong>Name:</strong> ${shippingInfo.firstName} ${shippingInfo.lastName}</p>
+                <p><strong>Address:</strong> ${shippingInfo.address}</p>
+            `;
+
+            // Complete order button
+            document.getElementById('completeOrderBtn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            userId: user.id,
+                            items: [{
+                                productId: product.id,
+                                name: product.name,
+                                price: product.price,
+                                quantity: 1
+                            }],
+                            shippingInfo,
+                            total: product.price
+                        })
+                    });
+
+                    if (response.ok) {
+                        sessionStorage.removeItem('currentProduct');
+                        sessionStorage.removeItem('shippingInfo');
+                        window.location.href = '/thanks.html';
+                    } else {
+                        alert('Failed to complete order. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Order error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

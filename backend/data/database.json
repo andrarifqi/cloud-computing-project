@@ -1,0 +1,130 @@
+{
+  "users": [
+    {
+      "id": "19cff9ea-5902-4fd0-9ff5-c9152b310ee2",
+      "fullname": "rifqiandra",
+      "email": "rifqiandra@example.com",
+      "password": "rifqiandra123",
+      "createdAt": "2025-06-06T15:35:29.469Z"
+    },
+    {
+      "id": "682fbb7d-effb-44cf-8509-5b6b8ad6dfba",
+      "fullname": "Iman",
+      "email": "iman@example.com",
+      "password": "iman123",
+      "createdAt": "2025-06-08T03:22:11.897Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Sweater",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "price": 89,
+      "image": "sweater.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Shirt",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "price": 129,
+      "image": "shirt.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Loose Pants",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "price": 109,
+      "image": "loose-pants.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Sneakers",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "price": 199,
+      "image": "shoes.jpg"
+    }
+  ],
+  "orders": [
+    {
+      "id": "40f39de6-2109-473d-bb9e-ce50334a1d23",
+      "userId": "19cff9ea-5902-4fd0-9ff5-c9152b310ee2",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Sweater",
+          "price": 89,
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "firstName": "Andra",
+        "lastName": "Rifqi",
+        "address": "PJ"
+      },
+      "total": 89,
+      "status": "completed",
+      "createdAt": "2025-06-06T15:36:28.687Z"
+    },
+    {
+      "id": "fe9768ff-cca9-4e2b-8ac8-d2e8e0efe5d8",
+      "userId": "19cff9ea-5902-4fd0-9ff5-c9152b310ee2",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Shirt",
+          "price": "129",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "firstName": "Rifqiandra",
+        "lastName": "Rifqiandra",
+        "address": "PJ"
+      },
+      "total": "129",
+      "status": "completed",
+      "createdAt": "2025-06-06T15:42:06.244Z"
+    },
+    {
+      "id": "1b94c245-4fbd-4789-af6f-38a923e99c99",
+      "userId": "19cff9ea-5902-4fd0-9ff5-c9152b310ee2",
+      "items": [
+        {
+          "productId": "4",
+          "name": "Sneakers",
+          "price": "199",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "firstName": "Andra",
+        "lastName": "Rifqi",
+        "address": "Seksyen 13, Petaling Jaya, Selangor"
+      },
+      "total": "199",
+      "status": "completed",
+      "createdAt": "2025-06-06T17:24:06.213Z"
+    },
+    {
+      "id": "51185b13-a19b-4b04-bf15-23a1ea7682f9",
+      "userId": "682fbb7d-effb-44cf-8509-5b6b8ad6dfba",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Sweater",
+          "price": "89",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "firstName": "Andra",
+        "lastName": "Rifqi",
+        "address": "Seksyen 13, Petaling Jaya, Selangor"
+      },
+      "total": "89",
+      "status": "completed",
+      "createdAt": "2025-06-08T03:22:49.060Z"
+    }
+  ]
+}
