@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage - StyleSphere</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://stylesphere-static-assets.s3.us-east-1.amazonaws.com/assets/favicon-32x32.png">
+    <link rel="stylesheet" href="https://stylesphere-static-assets.s3.us-east-1.amazonaws.com/css/styles.css">
 </head>
 <body>
     <header class="header">
@@ -77,7 +77,7 @@
                 const productGrid = document.getElementById('productGrid');
                 productGrid.innerHTML = products.map(product => `
                     <div class="product-card">
-                        <img src="/assets/${product.image}" alt="${product.name}">
+                        <img src="${product.image}" alt="${product.name}">
                         <div class="product-info">
                             <h3>${product.name}</h3>
                             <p class="description">${product.description}</p>

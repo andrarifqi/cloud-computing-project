@@ -21,28 +21,28 @@
       "name": "Sweater",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "price": 89,
-      "image": "sweater.jpg"
+      "image": "https://stylesphere-static-assets.s3.us-east-1.amazonaws.com/assets/sweater.jpg"
     },
     {
       "id": "2",
       "name": "Shirt",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "price": 129,
-      "image": "shirt.jpg"
+      "image": "https://stylesphere-static-assets.s3.us-east-1.amazonaws.com/assets/shirt.jpg"
     },
     {
       "id": "3",
       "name": "Loose Pants",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "price": 109,
-      "image": "loose-pants.jpg"
+      "image": "https://stylesphere-static-assets.s3.us-east-1.amazonaws.com/assets/loose-pants.jpg"
     },
     {
       "id": "4",
       "name": "Sneakers",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "price": 199,
-      "image": "shoes.jpg"
+      "image": "https://stylesphere-static-assets.s3.us-east-1.amazonaws.com/assets/shoes.jpg"
     }
   ],
   "orders": [
